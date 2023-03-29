@@ -2,35 +2,21 @@
 <%@page pageEncoding="utf-8" contentType="text/html; utf-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <title>韩顺平教育-家居网购</title>
+    <!-- 移动端适配 -->
     <base href="/jiaju/">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
-    <link rel="stylesheet" href="assets/css/style.min.css"/>
-    <script type="application/javascript" src="assets/js/jquery-3.6.0.min.js"></script>
-    <script>
-        $(function (){
-            $(".icon-pencil").click(function () {
-                let id = (this).getAttribute("itemId");
-                let name = "qtybutton" + id;
-                var value = $("input[name='" + name + "']").val();
-                location.href="cart?action=update&count=" + value + "&id=" + id;
-
-            })
-
-        })
-    </script>
+    <link rel="stylesheet" href="assets/css/style.min.css">
 </head>
 
 <body>
 <!-- Header Area start  -->
 <div class="header section">
-    <!-- Header Top Message Start -->
     <!-- Header Top  End -->
     <!-- Header Bottom  Start -->
     <div class="header-bottom d-none d-lg-block">
@@ -39,7 +25,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img src="assets/images/logo/logo.png" alt="Site Logo"/></a>
+                        <a href="index.jsp"><img src="assets/images/logo/logo.png" alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -61,6 +47,7 @@
             </div>
         </div>
     </div>
+    <!-- Header Bottom  End -->
     <!-- Header Bottom  Start 手机端的header -->
     <div class="header-bottom d-lg-none sticky-nav bg-white">
         <div class="container position-relative">
@@ -68,8 +55,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img width="280px" src="assets/images/logo/logo.png"
-                                                  alt="Site Logo"/></a>
+                        <a href="index.html"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -80,26 +66,10 @@
     <div style="width: 100%;height: 50px;background-color: black"></div>
     <!-- Main Menu End -->
 </div>
-<!-- Header Area End  -->
-
-<!-- OffCanvas Cart Start -->
-
-<!-- OffCanvas Cart End -->
-
-<!-- OffCanvas Menu Start -->
-
-<!-- OffCanvas Menu End -->
-
-
-<!-- breadcrumb-area start -->
-
-
-<!-- breadcrumb-area end -->
-
 <!-- Cart Area Start -->
-<div class="cart-main-area pt-100px pb-100px">
+<div class="cart-main-area pt-70px pb-100px">
     <div class="container">
-        <h3 class="cart-page-title">Your cart items</h3>
+        <h3 class="cart-page-title">订单管理</h3>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <form action="#">
@@ -107,32 +77,27 @@
                         <table>
                             <thead>
                             <tr>
-                                <th>图片</th>
-                                <th>家居名</th>
-                                <th>单价</th>
-                                <th>数量</th>
+				<th>订单</th>
+                                <th>日期</th>
                                 <th>金额</th>
-                                <th>操作</th>
+                                <th>状态</th>
+                                <th>详情</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${sessionScope.cart.items}" var="item">
+                            <c:forEach items="${sessionScope.orders}" var="order">
                                 <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img class="img-responsive ml-3" src="${item.imgPath}"
-                                                         alt=""/></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">${item.name}</a></td>
-                                    <td class="product-price-cart"><span class="amount">$${item.price}</span></td>
-                                    <td class="product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton${item.id}" value="${item.count}"/>
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$${item.totalPrice}</td>
+                                    <td class="product-name">${order.orderNum}</td>
+                                    <td class="product-name">${order.date}</td>
+                                    <td class="product-price-cart"><span class="amount">${order.price}</span></td>
+                                    <c:if test="${order.state == 0}">
+                                        <td class="product-name"><a href="#">未发货</a></td>
+                                    </c:if>
+                                    <c:if test="${order.state != 0}">
+                                        <td class="product-name"><a href="#">已发货</a></td>
+                                    </c:if>
                                     <td class="product-remove">
-                                        <i class="icon-pencil" itemId="${item.id}"></i>
-                                        <a href="cart?action=delete&id=${item.id}"><i class="icon-close"></i></a>
+                                        <a href="order?action=showOrderItems&orderId=${order.id}"><i class="icon-eye"></i></a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -140,22 +105,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="cart-shiping-update-wrapper">
-                                <h4>共${sessionScope.cart.totalCount}件商品 总价 ${sessionScope.cart.totalPrice}元</h4>
-                                <div class="cart-shiping-update">
-                                    <a href="order?action=genOrder">购 物 车 结 账</a>
-                                </div>
-                                <div class="cart-clear">
-                                    <button>继 续 购 物</button>
-                                    <a href="cart?action=clear">清 空 购 物 车</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -198,10 +148,10 @@
                                     <ul class="align-items-center">
                                         <li class="li"><a class="single-link" href="my-account.html">我的账号</a>
                                         </li>
-                                        <li class="li"><a class="single-link" href="cart.jsp">我的购物车</a></li>
+                                        <li class="li"><a class="single-link" href="cart.html">我的购物车</a></li>
                                         <li class="li"><a class="single-link" href="login.html">登录</a></li>
                                         <li class="li"><a class="single-link" href="wishlist.html">感兴趣的</a></li>
-                                        <li class="li"><a class="single-link" href="checkout.html">结账</a></li>
+                                        <li class="li"><a class="single-link" href="checkout.jsp">结账</a></li>
                                     </ul>
                                 </div>
                             </div>

@@ -2,7 +2,6 @@
 <%@page pageEncoding="utf-8" contentType="text/html; utf-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
@@ -12,21 +11,8 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css"/>
-    <script type="application/javascript" src="assets/js/jquery-3.6.0.min.js"></script>
-    <script>
-        $(function (){
-            $(".icon-pencil").click(function () {
-                let id = (this).getAttribute("itemId");
-                let name = "qtybutton" + id;
-                var value = $("input[name='" + name + "']").val();
-                location.href="cart?action=update&count=" + value + "&id=" + id;
 
-            })
-
-        })
-    </script>
 </head>
-
 <body>
 <!-- Header Area start  -->
 <div class="header section">
@@ -53,7 +39,7 @@
                             <a href="#">订单管理</a>
                         </div>
                         <div class="header-bottom-set dropdown">
-                            <a href="#">安全退出</a>
+                            <a href="memberServlet?action=logout">安全退出</a>
                         </div>
                     </div>
                 </div>
@@ -68,7 +54,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img width="280px" src="assets/images/logo/logo.png"
+                        <a href="index.jsp"><img width="280px" src="assets/images/logo/logo.png"
                                                   alt="Site Logo"/></a>
                     </div>
                 </div>
@@ -81,86 +67,23 @@
     <!-- Main Menu End -->
 </div>
 <!-- Header Area End  -->
-
-<!-- OffCanvas Cart Start -->
-
-<!-- OffCanvas Cart End -->
-
-<!-- OffCanvas Menu Start -->
-
-<!-- OffCanvas Menu End -->
-
-
-<!-- breadcrumb-area start -->
-
-
-<!-- breadcrumb-area end -->
-
-<!-- Cart Area Start -->
-<div class="cart-main-area pt-100px pb-100px">
+<!-- login area start -->
+<div class="login-register-area pt-70px pb-100px">
     <div class="container">
-        <h3 class="cart-page-title">Your cart items</h3>
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <form action="#">
-                    <div class="table-content table-responsive cart-table-content">
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>图片</th>
-                                <th>家居名</th>
-                                <th>单价</th>
-                                <th>数量</th>
-                                <th>金额</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${sessionScope.cart.items}" var="item">
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img class="img-responsive ml-3" src="${item.imgPath}"
-                                                         alt=""/></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">${item.name}</a></td>
-                                    <td class="product-price-cart"><span class="amount">$${item.price}</span></td>
-                                    <td class="product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton${item.id}" value="${item.count}"/>
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$${item.totalPrice}</td>
-                                    <td class="product-remove">
-                                        <i class="icon-pencil" itemId="${item.id}"></i>
-                                        <a href="cart?action=delete&id=${item.id}"><i class="icon-close"></i></a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-
-                            </tbody>
-                        </table>
+            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
+                        <a class="active" href="order?action=showOrders">
+                            <h4>订单已结算, ${sessionScope.orderInfo.orderNum}-hello</h4>
+                        </a>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="cart-shiping-update-wrapper">
-                                <h4>共${sessionScope.cart.totalCount}件商品 总价 ${sessionScope.cart.totalPrice}元</h4>
-                                <div class="cart-shiping-update">
-                                    <a href="order?action=genOrder">购 物 车 结 账</a>
-                                </div>
-                                <div class="cart-clear">
-                                    <button>继 续 购 物</button>
-                                    <a href="cart?action=clear">清 空 购 物 车</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
+                </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Cart Area End -->
+<!-- login area end -->
 
 <!-- Footer Area Start -->
 <div class="footer-area">
@@ -198,10 +121,10 @@
                                     <ul class="align-items-center">
                                         <li class="li"><a class="single-link" href="my-account.html">我的账号</a>
                                         </li>
-                                        <li class="li"><a class="single-link" href="cart.jsp">我的购物车</a></li>
+                                        <li class="li"><a class="single-link" href="cart.html">我的购物车</a></li>
                                         <li class="li"><a class="single-link" href="login.html">登录</a></li>
                                         <li class="li"><a class="single-link" href="wishlist.html">感兴趣的</a></li>
-                                        <li class="li"><a class="single-link" href="checkout.html">结账</a></li>
+                                        <li class="li"><a class="single-link" href="checkout.jsp">结账</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -225,7 +148,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-left">
-                        <p class="copy-text">Copyright &copy; 2021 韩顺平教育~</p>
+                        <p class="copy-text">Copyright &copy; 2021 韩顺平教育</p>
                     </div>
                 </div>
             </div>

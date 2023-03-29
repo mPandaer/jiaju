@@ -22,6 +22,10 @@ public class CartServlet extends BaseServlet {
         }
         //有id
         HouseHold houseHold = houseHoldService.getHouseHoldById(Integer.parseInt(id));
+        if (houseHold.getStock() <= 0) {
+            response.sendRedirect(request.getContextPath());
+            return;
+        }
         Cart.CartItem cartItem = new Cart.CartItem(houseHold.getId(), houseHold.getName(),
                 houseHold.getImgPath(), houseHold.getPrice(), 1);
         HttpSession session = request.getSession();

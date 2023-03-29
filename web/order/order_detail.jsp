@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page pageEncoding="utf-8" contentType="text/html; utf-8" language="java" %>
 <!DOCTYPE html>
@@ -12,19 +13,6 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css"/>
-    <script type="application/javascript" src="assets/js/jquery-3.6.0.min.js"></script>
-    <script>
-        $(function (){
-            $(".icon-pencil").click(function () {
-                let id = (this).getAttribute("itemId");
-                let name = "qtybutton" + id;
-                var value = $("input[name='" + name + "']").val();
-                location.href="cart?action=update&count=" + value + "&id=" + id;
-
-            })
-
-        })
-    </script>
 </head>
 
 <body>
@@ -99,7 +87,7 @@
 <!-- Cart Area Start -->
 <div class="cart-main-area pt-100px pb-100px">
     <div class="container">
-        <h3 class="cart-page-title">Your cart items</h3>
+        <h3 class="cart-page-title">订单-16248893425621</h3>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <form action="#">
@@ -107,49 +95,39 @@
                         <table>
                             <thead>
                             <tr>
-                                <th>图片</th>
+
                                 <th>家居名</th>
                                 <th>单价</th>
                                 <th>数量</th>
                                 <th>金额</th>
-                                <th>操作</th>
+
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${sessionScope.cart.items}" var="item">
+                            <c:forEach items="${requestScope.orderItems}" var="item">
                                 <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img class="img-responsive ml-3" src="${item.imgPath}"
-                                                         alt=""/></a>
-                                    </td>
                                     <td class="product-name"><a href="#">${item.name}</a></td>
                                     <td class="product-price-cart"><span class="amount">$${item.price}</span></td>
-                                    <td class="product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton${item.id}" value="${item.count}"/>
-                                        </div>
-                                    </td>
+                                    <td class="product-quantity">${item.count}</td>
                                     <td class="product-subtotal">$${item.totalPrice}</td>
-                                    <td class="product-remove">
-                                        <i class="icon-pencil" itemId="${item.id}"></i>
-                                        <a href="cart?action=delete&id=${item.id}"><i class="icon-close"></i></a>
-                                    </td>
                                 </tr>
                             </c:forEach>
 
+<%--                            <tr>--%>
+<%--                                <td class="product-name"><a href="#">Product Name</a></td>--%>
+<%--                                <td class="product-price-cart"><span class="amount">$60.00</span></td>--%>
+<%--                                <td class="product-quantity">12</td>--%>
+<%--                                <td class="product-subtotal">$70.00</td>--%>
+<%--                            </tr>--%>
                             </tbody>
                         </table>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="cart-shiping-update-wrapper">
-                                <h4>共${sessionScope.cart.totalCount}件商品 总价 ${sessionScope.cart.totalPrice}元</h4>
-                                <div class="cart-shiping-update">
-                                    <a href="order?action=genOrder">购 物 车 结 账</a>
-                                </div>
+                                <h4>共${sessionScope.orderInfo.count}件商品 ${sessionScope.orderInfo.totalPrice}总价元</h4>
                                 <div class="cart-clear">
-                                    <button>继 续 购 物</button>
-                                    <a href="cart?action=clear">清 空 购 物 车</a>
+                                    <a href="index.html">继 续 购 物</a>
                                 </div>
                             </div>
                         </div>
@@ -198,10 +176,10 @@
                                     <ul class="align-items-center">
                                         <li class="li"><a class="single-link" href="my-account.html">我的账号</a>
                                         </li>
-                                        <li class="li"><a class="single-link" href="cart.jsp">我的购物车</a></li>
+                                        <li class="li"><a class="single-link" href="cart.html">我的购物车</a></li>
                                         <li class="li"><a class="single-link" href="login.html">登录</a></li>
                                         <li class="li"><a class="single-link" href="wishlist.html">感兴趣的</a></li>
-                                        <li class="li"><a class="single-link" href="checkout.html">结账</a></li>
+                                        <li class="li"><a class="single-link" href="checkout.jsp">结账</a></li>
                                     </ul>
                                 </div>
                             </div>

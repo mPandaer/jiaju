@@ -145,9 +145,16 @@
                                             <form action="cart">
                                                 <input type="hidden" name="action" value="addToCart">
                                                 <input type="hidden" name="id" value="${item.id}">
-                                                <button title="Add To Cart" class=" add-to-cart" type="submit">Add
-                                                    To Cart
-                                                </button>
+                                                <c:if test="${item.stock > 0 }">
+                                                    <button title="Add To Cart" class=" add-to-cart" type="submit">Add
+                                                        To Cart
+                                                    </button>
+                                                </c:if>
+
+                                                <c:if test="${item.stock <= 0 }">
+                                                    <span class=" add-to-cart"> 暂时缺货 </span>
+                                                </c:if>
+
                                             </form>
 
                                         </div>

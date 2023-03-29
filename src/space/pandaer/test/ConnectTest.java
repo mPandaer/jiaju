@@ -12,7 +12,7 @@ public class ConnectTest {
     @Test
     public void testConnect() throws SQLException {
         Connection connection = JDBCUtilsByDruid.getConnection();
-        System.out.println(connection);
+//        System.out.println(connection);
         JDBCUtilsByDruid.close(null,null,connection);
     }
 }

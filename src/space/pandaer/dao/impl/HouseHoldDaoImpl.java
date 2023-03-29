@@ -20,7 +20,7 @@ public class HouseHoldDaoImpl extends BasicDAO<HouseHold> implements HouseHoldDa
     //修改家具信息
     @Override
     public boolean updateHouseHold(HouseHold houseHold) {
-        String sql = "update household\n" +
+        String sql = "updatex household\n" +
                 "    set `name` = ?,`manu`=?,`price`=?,`sales`=?,`stock`=?,`img_path` = ?\n" +
                 "where `id` = ?";
         return update(sql, houseHold.getName(), houseHold.getManu(),

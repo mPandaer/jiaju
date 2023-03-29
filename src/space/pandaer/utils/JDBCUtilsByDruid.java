@@ -3,7 +3,6 @@ package space.pandaer.utils;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
 import javax.sql.DataSource;
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +17,7 @@ import java.util.Properties;
 public class JDBCUtilsByDruid {
 
     private static DataSource ds;
+    private static final ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
 
     //在静态代码块完成 ds初始化
     static {
@@ -33,7 +33,12 @@ public class JDBCUtilsByDruid {
 
     //编写getConnection方法
     public static Connection getConnection() throws SQLException {
-        return ds.getConnection();
+        Connection connection = threadLocal.get();
+        if (connection == null) {
+            threadLocal.set(ds.getConnection());
+        }
+        return threadLocal.get();
+//        return ds.getConnection();
     }
 
     //关闭连接, 老师再次强调： 在数据库连接池技术中，close 不是真的断掉连接
